@@ -66,7 +66,7 @@ If you use GPG directly, you won't need to mark the release signing key as trust
 
 Finally, verify the asc signature file (links above) against the PDF file by issuing the following example command:
 
-```gpg --verify guide.pdf.asc guide.pdf"```
+```gpg --verify guide.pdf.asc guide.pdf```
 
 This should output a result showing it matches a signature created by the release signing key, and is therefore a good result.
 
@@ -83,9 +83,9 @@ To verify the files with Minisign:
 ### How to check the relative safety of files or even URLs (such as https://anonymousplanet.org) using VirusTotal:
 **Note: we do not endorse VirusTotal. It should be used with extreme caution, never with any sensitive files, due to their privacy policies. Do not upload sensitive files to VirusTotal.**
 
-Temporarily Disabled. <del>The PDF and ODT files of this guide have been checked by VT, see the links below for an example but do not trust these hashes blindly. Check the hashes match and re-upload to VT if needed:
-- PDF file: [[VT Scan]](https://www.virustotal.com/gui/file/649a35b370a96c02e33ea95796bd5aacd2e30f20280bf38bc62838617ceddd63?nocache=1)
-- ODT file: [[VT Scan]](https://www.virustotal.com/gui/file-analysis/OGI0YTQzZGJlODE1MDhlMTA0YjlhZmUyMmU3ZDcwNmY6MTY4MDMzODM5OQ==) 
+The PDF and ODT files of this guide have been automatically scanned by VT, see the links below for an example but do not trust these hashes blindly. Check the hashes match and re-upload to VT if needed:
+- PDF file: [[VT Scan]](https://www.virustotal.com/gui/file/2503891b2df0df9d7b6a38bb334f087ff4c1775a40a205117454c5f73da45825?nocache=1)
+- ODT file: [[VT Scan]](https://www.virustotal.com/gui/file/6a25a4218510cf0da721a80b529f6fe233fc414b31cd4c9f8415c8fca435c847?nocache=1) 
 
 ### Additional manual safety checks for the PDF files:
 

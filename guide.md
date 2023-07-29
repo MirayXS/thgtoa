@@ -2,7 +2,7 @@
 
 (Or "How I learned to start worrying and love ~~privacy~~ anonymity")
 
-Version 1.1.7, June 2023 by Anonymous Planet
+Version v1.1.8, July 2023 by Anonymous Planet
 
 #### **IMPORTANT RECOMMENDATION FOR UKRAINIANS. ВАЖЛИВА РЕКОМЕНДАЦІЯ ДЛЯ УКРАЇНЦІВ**
 
@@ -124,8 +124,7 @@ Finally note that this guide does mention and even recommends various commercial
         -   [Pixelized or Blurred Information:]
     -   [Your Cryptocurrencies transactions:]
     -   [Your Cloud backups/sync services:]
-    -   [Your Browser and Device Fingerprints:]
-        -   [Microarchitectural Side-channel Deanonymization Attacks:]
+    -   [Microarchitectural Side-channel Deanonymization Attacks:]
     -   [Local Data Leaks and Forensics:]
     -   [Bad Cryptography:]
     -   [No logging but logging anyway policies:]
@@ -278,7 +277,7 @@ Finally note that this guide does mention and even recommends various commercial
     -   [Privacy Settings:]
 -   [Appendix B: Windows Additional Privacy Settings]
 -   [Appendix C: Windows Installation Media Creation]
--   [Appendix D: Using System Rescue to securely wipe an SSD drive.]
+-   [Appendix D: Using System Rescue to securely wipe an SSD drive]
 -   [Appendix E: Clonezilla]
 -   [Appendix F: Diskpart]
 -   [Appendix G: Safe Browser on the Host OS]
@@ -591,7 +590,7 @@ Small in-between Disclaimer: **This guide does not necessarily endorse or recomm
 
 Unfortunately, the TLS protocol used in most HTTPS connections in most Browsers (Chrome/Brave among them) will leak the Domain Name again through SNI[^39] handshakes (this can be checked here at Cloudflare: <https://www.cloudflare.com/ssl/encrypted-sni/> <sup>[[Archive.org]](https://web.archive.org/web/https://www.cloudflare.com/ssl/encrypted-sni/)</sup> ). **As of the writing of this guide, only Firefox-based browsers supports ECH (Encrypted Client Hello**[^40] **previously known as eSNI**[^41]**) on some websites which will encrypt everything end to end (in addition to using a secure private DNS over TLS/HTTPS) and will allow you to hide your DNS requests from a third party**[^42]**.** And this option is not enabled by default either so you will have to enable it yourself.
 
-![][50]
+![](media/image04.png)
 
 In addition to limited browser support, only web Services and CDNs[^43] behind Cloudflare CDN support ECH/eSNI at this stage[^44]. This means that ECH and eSNI are not supported (as of the writing of this guide) by most mainstream platforms such as:
 
@@ -625,7 +624,7 @@ Here is a list of how various browsers behave with OCSP: <https://www.ssl.com/bl
 
 Here is an illustration of the issue you could encounter on Firefox-based browsers:
 
-![][52]
+![](media/image05.png)
 
 Finally, even if you use a custom encrypted DNS server (DoH or DoT) with ECH/eSNI support and OCSP stapling, it might still not be enough as traffic analysis studies[^52] have shown it is still possible to reliably fingerprint and block unwanted requests. Only DNS over Tor was able to show efficient DNS Privacy in recent studies but even that can still be defeated by other means (see [Your Anonymized Tor/VPN traffic][Your Anonymized Tor/VPN traffic:]).
 
@@ -640,7 +639,7 @@ Lastly, there is also this new possibility called DoHoT which stands for DNS ove
 
 Here is an illustration showing the current state of DNS and HTTPS privacy based on our current knowledge.
 
-![][56]
+![](media/image06.png)
 
 As for your normal daily use (non-sensitive), remember that only Firefox-based browsers support ECH (formerly eSNI) so far and that it is only useful with websites hosted behind Cloudflare CDN at this stage. If you prefer a Chrome-based version (which is understandable for some due to some better-integrated features like on-the-fly Translation), then we would recommend the use of Brave instead which supports all Chrome extensions and offers much better privacy than Chrome.
 
@@ -696,7 +695,7 @@ Other researchers have found a way to count the people in a defined space using 
 
 You could therefore imagine many use cases for such technologies like recording who enters specific buildings/offices (hotels, hospitals, or embassies for instance) and then discover who meets who and thereby tracking them from outside. Even if they have no smartphone on them.
 
-![][63]
+![](media/image07.png)
 
 Again, such an issue could only be mitigated by being in a room/building that would act as a Faraday cage.
 
@@ -734,15 +733,15 @@ Tor and VPNs are not silver bullets. Many advanced techniques have been develope
 
 -   **Correlation Fingerprinting Attack:** As illustrated (simplified) below, this attack will fingerprint your encrypted Tor traffic (like the websites you visited) based on the analysis of your encrypted traffic without decrypting it. Some of those methods can do so with a 96% success rate **in a closed-world setting**. **The efficacy of those methods in a real open-world setting** **has not been demonstrated yet and would probably require tremendous resources computing power making it very unlikely that such techniques would be used by a local adversary in the near future.** Such techniques could however hypothetically be used by an advanced and probably global adversary with access to your source network to determine some of your activity. Examples of those attacks are described in several research papers[^69]'[^70]'[^71] as well as their limitations[^72]. The Tor Project itself published an article about these attacks with some mitigations: <https://blog.torproject.org/new-low-cost-traffic-analysis-attacks-mitigations> <sup>[[Archive.org]](https://web.archive.org/web/https://blog.torproject.org/new-low-cost-traffic-analysis-attacks-mitigations)</sup>.
 
-![][67]
+![](media/image08.png)
 
 -   **Correlation Timing Attacks:** As illustrated (simplified) below, an adversary that has access to network connection logs (IP or DNS for instance, remember that most VPN servers and most Tor nodes are known and publicly listed) at the source and the destination could correlate the timings to de-anonymize you without requiring any access to the Tor or VPN network in between. A real use case of this technique was done by the FBI in 2013 to de-anonymize[^73] a bomb threat hoax at Harvard University.
 
-![][68]
+![](media/image09.png)
 
 -   **Correlation Counting Attacks:** As illustrated (simplified) below, an adversary that has no access to detailed connection logs (cannot see that you used Tor or Netflix) but has access to data counting logs could see that you have downloaded 600MB on a specific time/date that matches the 600MB upload at the destination. This correlation can then be used to de-anonymize you over time.
 
-![][69]
+![](media/image10.png)
 
 There are ways to mitigate these such as:
 
@@ -886,6 +885,10 @@ This guide won't go too deep into side-channel and microarchitecture attacks but
 We will mitigate some of these issues in this guide by recommending the use of virtual machines on a dedicated anonymous laptop for your sensitive activities that will only be used from an anonymous public network.
 
 **In addition, we recommend the use of AMD CPUs instead of Intel CPUs.**
+
+-   CPU vulnerabilities found in the past few years:
+
+    -   [Meltdown](https://en.wikipedia.org/wiki/Meltdown_(security_vulnerability)), [Spectre](https://en.wikipedia.org/wiki/Spectre_(security_vulnerability)), [Æpic](https://aepicleak.com/), [SGAxe](https://en.wikipedia.org/wiki/Software_Guard_Extensions#SGAxe), [LVI](https://en.wikipedia.org/wiki/Software_Guard_Extensions#LVI), [Plundervolt](https://en.wikipedia.org/wiki/Software_Guard_Extensions#Plundervolt), [MicroScope replay attack](https://en.wikipedia.org/wiki/Software_Guard_Extensions#MicroScope_replay_attack), [Enclave](https://en.wikipedia.org/wiki/Software_Guard_Extensions#Enclave_attack), [Prime+Probe](https://en.wikipedia.org/wiki/Software_Guard_Extensions#Prime+Probe_attack), [Crosstalk](https://www.vusec.net/projects/crosstalk/), [Hertzbleed](https://en.wikipedia.org/wiki/Hertzbleed), [Squip attack](https://www.securityweek.com/amd-processors-expose-sensitive-data-new-squip-attack/), [Zenbleed](https://lock.cmpxchg8b.com/zenbleed.html)
 
 ## Your Operating Systems and Apps telemetry services:
 
@@ -1129,11 +1132,11 @@ Contrary to popular belief and pop culture, modern gait recognition systems aren
 
 Other things than can be used to identify you include your earlobes, which are actually more identifiable than fingerprints, or even the shape of your skull. As such, soft headcoverings such as balaclavas are not recommendable for obscuring your identity - they make you look incredibly suspicious, while also conforming to the shape of your skull.
 
-![][113]
+![](media/image11.png)
 
 (Illustration from <https://www.nature.com/articles/s41598-020-79310-1> <sup>[[Archive.org]](https://web.archive.org/web/https://www.nature.com/articles/s41598-020-79310-1.pdf)</sup>)
 
-![][115]
+![](media/image12.png)
 
 (illustration from <https://rd.springer.com/chapter/10.1007/978-3-030-42504-3_15> <sup>[[Archive.org]](https://web.archive.org/web/https://rd.springer.com/chapter/10.1007/978-3-030-42504-3_15)</sup>)
 
@@ -1399,24 +1402,6 @@ Notable Examples:
 You should not trust cloud providers with your (not previously and locally encrypted) sensitive data and you should be wary of their privacy claims. In most cases, they can access your data and provide it to a third party if they want to[^250].
 
 The only way to mitigate this is to encrypt your data on your side and then only upload it to such services **or just not use them at all.**
-
-## Your Browser and Device Fingerprints:
-
-Your Browser and Device Fingerprints[^382] are a set of properties/capabilities of your System/Browser. These are used on most websites for invisible user tracking but also to adapt the website user experience depending on their browser. For instance, websites will be able to provide a "mobile experience" if you are using a mobile browser or propose a specific language/geographic version depending on your fingerprint. Most of those techniques work with recent Browsers like Chromium-based[^251] browsers (such as Chrome/Edge) or Firefox[^252] unless taking specific measures. Browser and Device[^382] Fingerprinting are usually integrated into the Captcha services but also in other various services.
-
-We will address [Browser and Device Fingerprinting][Browser and Device Fingerprinting:] further down but this is a basic introduction to the methodology behind it and why it is used in practice.
-
-It should also be noted that while some browsers and extensions will offer some fingerprint resistance, this resistance in itself can also be used to fingerprint you as explained here <https://palant.info/2020/12/10/how-anti-fingerprinting-extensions-tend-to-make-fingerprinting-easier/> <sup>[[Archive.org]](https://web.archive.org/web/https://palant.info/2020/12/10/how-anti-fingerprinting-extensions-tend-to-make-fingerprinting-easier/)</sup>
-
-This guide will mitigate these issues by randomizing or hiding many of those fingerprinting identifiers by:
-
--   Using Virtualization (See [Appendix W: Virtualization]);
-
--   Using specific recommendations (See [Appendix A5: Additional browser precautions with JavaScript enabled];
-
--   Using hardening [Appendix V1: Hardening your Browsers][Appendix V1: Hardening your Browsers:]);
-
--   and by using fingerprint-resistant browsers (like Brave or Tor Browser).
 
 ## Microarchitectural Side-channel Deanonymization Attacks:
 
@@ -1736,8 +1721,6 @@ If you still do not think such information can be used by various actors to trac
 
 -   GitHub Transparency Report <https://github.blog/2021-02-25-2020-transparency-report/> <sup>[[Archive.org]](https://web.archive.org/web/https://github.blog/2021-02-25-2020-transparency-report/)</sup>
 
--   Snapchat Transparency Report <https://www.snap.com/en-US/privacy/transparency/> <sup>[[Archive.org]](https://web.archive.org/web/20220806141853/https://www.snap.com/en-US/privacy/transparency)</sup>
-
 -   TikTok Transparency Report <https://www.tiktok.com/transparency/en/information-requests-2021-2/> <sup>[[Archive.org]](https://web.archive.org/web/20220812054600/https://www.tiktok.com/transparency/en/information-requests-2021-2/)</sup>
 
 -   Reddit Transparency Report <https://www.redditinc.com/policies/transparency-report-2021> <sup>[[Archive.org]](https://web.archive.org/web/20220812054736/https://www.redditinc.com/policies/transparency-report-2021)</sup>
@@ -1864,13 +1847,13 @@ Now that you know what is possible, you should also consider threats and adversa
 
         -   Low to Medium motivation: Any Route
 
-        -   High motivation: TAILS, Whonix, Qubes OS Routes
+        -   High motivation: Tails, Whonix, Qubes OS Routes
 
     -   High resources:
 
         -   Low motivation: Any route
 
-        -   Medium to High motivation: TAILS, Whonix, Qubes OS Routes
+        -   Medium to High motivation: Tails, Whonix, Qubes OS Routes
 
 -   Intermediate skills:
 
@@ -1878,17 +1861,17 @@ Now that you know what is possible, you should also consider threats and adversa
 
         -   Low motivation: Any Route
 
-        -   Medium to High motivation: TAILS, Whonix, Qubes OS Routes
+        -   Medium to High motivation: Tails, Whonix, Qubes OS Routes
 
     -   Medium resources:
 
         -   Low motivation: Any Route
 
-        -   Medium to High motivation: TAILS, Whonix, Qubes OS Routes
+        -   Medium to High motivation: Tails, Whonix, Qubes OS Routes
 
     -   High resources:
 
-        -   Low to High motivation: TAILS, Whonix, Qubes OS Routes
+        -   Low to High motivation: Tails, Whonix, Qubes OS Routes
 
 -   Highly skilled:
 
@@ -1896,15 +1879,15 @@ Now that you know what is possible, you should also consider threats and adversa
 
         -   Low motivation: Any Route
 
-        -   Medium to High motivation: TAILS, Whonix, Qubes OS Routes
+        -   Medium to High motivation: Tails, Whonix, Qubes OS Routes
 
     -   Medium resources:
 
-        -   Low to High motivation: TAILS, Whonix, Qubes OS Routes
+        -   Low to High motivation: Tails, Whonix, Qubes OS Routes
 
     -   High resources:
 
-        -   Low to High motivations: TAILS, Whonix, Qubes OS Routes **(but likely out of scope from this guide as this is probably a global adversary)**
+        -   Low to High motivations: Tails, Whonix, Qubes OS Routes **(but likely out of scope from this guide as this is probably a global adversary)**
 
 In all cases, you should read these two pages from the Whonix documentation that will give you in-depth insight into your choices:
 
@@ -1982,19 +1965,21 @@ There are some forums and subreddits (like r/phoneverification/) where users wil
 
 To this date, we do not know any reputable service that would offer this service and accept cash payments (by post for instance) like some VPN providers. But a few services are providing online phone numbers and do accept Monero which could be reasonably anonymous (yet less recommended than that physical way in the earlier chapter) that you could consider:
 
--   **Recommended**: Do not require any identification (even e-mail):
+-   **Recommended**: Providers which accept Monero (XMR) and don't require verification:
 
-    -   (Iceland based, accepts Monero) <https://crypton.sh> <sup>[[Tor Mirror]](http://cryptonx6nsmspsnpicuihgmbbz3qvro4na35od3eht4vojdo7glm6yd.onion)</sup> <sup>[[Archive.org]](https://web.archive.org/web/https://crypton.sh/)</sup>
+    -   (Iceland based) <https://crypton.sh> <sup>[[Tor Mirror]](http://cryptonx6nsmspsnpicuihgmbbz3qvro4na35od3eht4vojdo7glm6yd.onion)</sup> <sup>[[Archive.org]](https://web.archive.org/web/https://crypton.sh/)</sup>
 
-    -   (Ukraine based, accepts Monero) <https://virtualsim.net/> <sup>[[Archive.org]](https://web.archive.org/web/https://virtualsim.net/)</sup>
+    -   (Ukraine based) <https://virtualsim.net/> <sup>[[Archive.org]](https://web.archive.org/web/https://virtualsim.net/)</sup>
 
--   Do require identification (valid e-mail):
+    -   (Many countries) <https://silent.link/> <sup>[[Archive.org]](https://web.archive.org/web/20230718123605/https://silent.link/)</sup> (my favorite)
 
-    -   (US California based, accepts Monero) <https://mobilesms.io> <sup>[[Archive.org]](https://web.archive.org/web/https://mobilesms.io/)</sup>
+-   Do require e-mail verification, but accept Monero:
 
-    -   (Germany based, accepts Monero) <https://www.sms77.io/> <sup>[[Archive.org]](https://web.archive.org/web/https://www.sms77.io/)</sup>
+    -   (US California based) <https://mobilesms.io> <sup>[[Archive.org]](https://web.archive.org/web/https://mobilesms.io/)</sup>
 
-    -   (Russia based, accepts Monero) <https://onlinesim.ru/> <sup>[[Archive.org]](https://web.archive.org/web/https://onlinesim.ru/)</sup>
+    -   (Germany based) <https://www.sms77.io/> <sup>[[Archive.org]](https://web.archive.org/web/https://www.sms77.io/)</sup>
+
+    -   (Russia based) <https://onlinesim.ru/> <sup>[[Archive.org]](https://web.archive.org/web/https://onlinesim.ru/)</sup>
 
 There are some other possibilities listed here <https://cryptwerk.com/companies/sms/xmr/> <sup>[[Archive.org]](https://web.archive.org/web/https://cryptwerk.com/companies/sms/xmr/)</sup>. **Use at your own risk.**
 
@@ -5701,7 +5686,21 @@ For this reason, this guide does recommend the use of VPN over Tor (and not Tor 
 
 ### Browser and Device Fingerprinting:
 
+Your Browser and Device Fingerprints[^382] are a set of properties/capabilities of your System/Browser. These are used on most websites for invisible user tracking but also to adapt the website user experience depending on their browser. For instance, websites will be able to provide a "mobile experience" if you are using a mobile browser or propose a specific language/geographic version depending on your fingerprint. Most of those techniques work with recent Browsers like Chromium-based[^251] browsers (such as Chrome/Edge) or Firefox[^252] unless taking specific measures. Browser and Device[^382] Fingerprinting are usually integrated into the Captcha services but also in other various services.
+
 Many platforms (like Google[^383]) will check your browser for various capabilities and settings and block browsers they do not like. This is one of the reasons we recommend using Chromium-based browsers such as Brave Browser over Tor Browser within this VM.
+
+It should also be noted that while some browsers and extensions will offer some fingerprint resistance, this resistance in itself can also be used to fingerprint you as explained here <https://palant.info/2020/12/10/how-anti-fingerprinting-extensions-tend-to-make-fingerprinting-easier/> <sup>[[Archive.org]](https://web.archive.org/web/https://palant.info/2020/12/10/how-anti-fingerprinting-extensions-tend-to-make-fingerprinting-easier/)</sup>
+
+This guide will mitigate these issues by randomizing or hiding many of those fingerprinting identifiers by:
+
+-   Using Virtualization (See [Appendix W: Virtualization]);
+
+-   Using specific recommendations (See [Appendix A5: Additional browser precautions with JavaScript enabled];
+
+-   Using hardening [Appendix V1: Hardening your Browsers][Appendix V1: Hardening your Browsers:]);
+
+-   and by using fingerprint-resistant browsers (like Brave or Tor Browser).
 
 Here are some of the things they check within recent browsers:
 
@@ -8331,7 +8330,7 @@ If you can afford it, just buy Parted Magic for 11$ which provides an easy-to-us
 
 -   Option A: Check if your BIOS/UEFI has a built-in option to do so and if it does, use the correct option ("ATA/NVMe Secure Erase" or "ATA/NVMe Sanitize"). Do not use wipe with passes on an SSD drive.
 
--   Option B: See [Appendix D: Using System Rescue to securely wipe an SSD drive.]
+-   Option B: See [Appendix D: Using System Rescue to securely wipe an SSD drive]
 
 -   Option C: Wipe your disk and re-install Linux with new full disk encryption to overwrite all sectors with new encrypted data. **This method will be terribly slow compared to Option A and B as it will slowly overwrite your whole SSD. Also, note that this might not be the default behavior when using LUKS. You might have to check the option to also encrypt the empty space for this effectively wipe the drive.**
 
@@ -8385,7 +8384,7 @@ Unfortunately, you will not be able to wipe your Host OS using the Microsoft bui
 
 -   Option B: Check [Appendix J: Manufacturer tools for Wiping HDD and SSD drives.][Appendix J: Manufacturer tools for Wiping HDD and SSD drives:]
 
--   Option C: See [Appendix D: Using System Rescue to securely wipe an SSD drive.]
+-   Option C: See [Appendix D: Using System Rescue to securely wipe an SSD drive]
 
 -   Option D: Wipe your disk and re-install Windows before performing new full disk encryption (using Veracrypt or Bitlocker) to overwrite all sectors with new encrypted data. **This method will be slower compared to Option A and B as it will overwrite your whole SSD.**
 
@@ -8431,7 +8430,7 @@ Unfortunately, the macOS Recovery disk utility will not be able to perform a sec
 
 In most cases, if your disk was encrypted with Filevault and you just perform a normal erase, it should be "enough" according to them. It is not according to me, so you have no option besides re-installing macOS again and re-encrypt it with Filevault again after re-installing. This should perform a "crypto erase" by overwriting your earlier install and encryption. This method will be quite slow, unfortunately.
 
-If you want to do a faster secure erase (or have no time to perform a re-install and re-encryption), you can try using the method described in [Appendix D: Using System Rescue to securely wipe an SSD drive][Appendix D: Using System Rescue to securely wipe an SSD drive.] **(This will not work on M1 Macs)**. **Be careful tho as this will also erase your recovery partition which is needed to reinstall macOS.**
+If you want to do a faster secure erase (or have no time to perform a re-install and re-encryption), you can try using the method described in [Appendix D: Using System Rescue to securely wipe an SSD drive][Appendix D: Using System Rescue to securely wipe an SSD drive] **(This will not work on M1 Macs)**. **Be careful tho as this will also erase your recovery partition which is needed to reinstall macOS.**
 
 #### External SSD:
 
@@ -9956,7 +9955,7 @@ These are the steps to create a Windows 10 (21H1) Installation Media using this 
 
 - Go to https://www.microsoft.com/software-download/windows11 and download the ISO.
 
-# Appendix D: Using System Rescue to securely wipe an SSD drive.
+# Appendix D: Using System Rescue to securely wipe an SSD drive
 
 These instructions are valid for all Operating Systems:
 
@@ -10202,7 +10201,7 @@ If you want to use an external SSD drive for sensitive storage:
 
 -   Always use full disk encryption on those disks
 
--   **Use the manufacturer-provided tools to securely erase them if possible (see [Appendix K: Considerations for using external SSD drives]).**
+-   **Use the manufacturer-provided tools to securely erase them if possible.**
 
 -   Consider manually wiping data on them after use by doing a full decryption/encryption or filling them completely with random data.
 
@@ -11206,7 +11205,7 @@ The following are the recommended safest routes for each browser according to th
 
 -   Go into **Settings** > **Appearances** (`brave://settings/appearance`)
 
-    -   **Disable** "Show Top Sites"
+    -   (optional) **Disable** "Show autocomplete suggestions in address bar"
 
     -   **Disable** "Show Brave Suggested Sites"
 
@@ -11220,25 +11219,31 @@ The following are the recommended safest routes for each browser according to th
 
     -   Set "Trackers and Ads blocking" to **Aggressive**
 
-    -   Set Upgrade connections to HTTPS to **Enabled**
+    -   Set "Upgrade connections to HTTPS" to **Strict**
 
-    -   Set Cookie blocking to **Only cross-site**
+    -   **Enable** "Block scripts"
 
-    -   Set Fingerprinting blocking to **Standard** or **Strict**
+    -   Set "Block fingerprinting" to **Standard** or **Strict, may break sites**
+
+    -   Set "Block cookies" to **Only cross-site**
 
 -   Go into **Settings** > **Social media blocking** (`brave://settings/socialBlocking`)
 
-    -   **Uncheck** everything unless needed
+    -   **Uncheck** the Facebook, Twitter, and LinkedIn embeds
 
 -   Go to **Settings** > **Search engine** (`brave://settings/search`)
 
-    -   See [Appendix A3: Search Engines]
+    -   Set "Normal Window" and "Private Window" to use a more private and trackerless search engine
+
+        -   See [Appendix A3: Search Engines] for best options
+
+    -   **Disable** "Web Discovery Project"
+
+    -   **Disable** "Index other search engines"
 
 -   Go into **Settings** > **Extensions** (`brave://settings/extensions`)
 
-    -   **Disable** everything except "Private Window with Tor"
-
-    -   Set both **Resolve** methods to "Ask"
+    -   **Disable** everything
 
 -   Go into **Settings** > **Wallet** (`brave://settings/wallet`)
 
@@ -11250,13 +11255,13 @@ The following are the recommended safest routes for each browser according to th
 
 -   Go into **Settings** > **Privacy and Security** (`brave://settings/privacy`)
 
-    -   Leave **WebRTC** to "Default"
+    -   **Disable** everything except "Private window with Tor"
 
-    -   **Disable** "Allow privacy-preserving product analytics (P3A)"
+        -   (optional) Turn on **Automatically redirect .onion sites**
 
-    -   **Disable** "Automatically send daily usage ping to Brave"
+    -   Set **WebRTC handling policy** to "Disable non-proxied UDP"
 
-    -   Go into "Clear Browsing Data"
+    -   Go into **Clear Browsing Data** (`brave://settings/clearBrowserData`)
 
         -   Select **On Exit**
 
@@ -11264,27 +11269,35 @@ The following are the recommended safest routes for each browser according to th
 
         -   **Click** "Save"
 
+    -   Go into **Cookies and other site data** (`brave://settings/cookies`)
+
+        -   **Check** "Block third-party cookies" or "Block all cookies" (not recommended)
+
+        -   **Enable** "Clear cookies and site data when you close all windows"
+
+        -   Under "Sites that can always use cookies", check that you need any of these
+
 -   Open a new Tab
 
 -   **Click** "Customize" in the lower right corner
 
     -   **Disable** everything in Customize Dashboard except maybe the clock
 
--   Go into **Settings** > **Shields** > **Content filters** (`brave://settings/shields/filters`)
+-   Go into **Settings** > **Shields** > **Content filtering** (`brave://settings/shields/filters`)
 
     -   Select any additional adblocking filter you want
 
-        -   Recommended: **CJX's Annoyance List**, **Easylist-Cookie List**, **Fanboy Annoyances List**, **Fanboy Social List**, **Fanboy's Mobile Notifications List**, and **uBlock Annoyances List**
+        -   Recommended: **CJX's Annoyance**, **Easylist-Cookie**, **Fanboy's Annoyances**, **Fanboy's Social**, **Fanboy's Mobile Notifications**, and **uBlock Annoyances**
 
     -   Add custom filter lists
 
-        -   Add the [Actually Legitimate URL Shortener Tool](https://raw.githubusercontent.com/DandelionSprout/adfilt/master/ClearURLs%20for%20uBo/clear_urls_uboified.txt) which uses the rules found in ClearURLs below
+        -   Add the [ClearURLs for uBo (unofficial)](https://raw.githubusercontent.com/DandelionSprout/adfilt/master/ClearURLs%20for%20uBo/clear_urls_uboified.txt) which uses the rules found in ClearURLs below
 
         -   Add the [AdGuard URL Tracking Protection](https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_17_TrackParam/filter.txt) which enables generic `$removeparam` rules
 
     -   To keep all applied filters, **click** "Save"
 
--   Do not ever enable Brave Rewards (button should be hidden on all sites)
+-   Do not ever enable Brave Rewards (button should now be hidden on all sites)
 
 Addons to consider on Brave if you want additional protections:
 
@@ -11300,7 +11313,7 @@ Addons to consider on Brave if you want additional protections:
 
 -   LibRedirect (<https://libredirect.github.io/>)
 
-That's it and you should be pretty much covered. For full paranoia, you can also just "Block Scripts" to disable Javascript. Note that even disabling Javascript might not protect you fully[^517].
+That's it and you should be pretty much covered. For full paranoia, you can also just "Block Scripts" to disable Javascript. Note that even disabling Javascript might not protect you fully[^517]. If you choose to disable JS, use the NoScript extension, not the Brave setting.
 
 ## Ungoogled-Chromium:
 
@@ -12182,7 +12195,7 @@ Find it online at:
 
 -   Original: <https://anonymousplanet.org>
     
--   Tor Onion Mirror: <http://thgtoallkcxrdv37u6knsc3pumk6cq6lqmcqlw3j5vkmyahkxive4jyd.onion>    
+-   Tor Onion Mirror: <http://thgtoa27ujspeqxasrfvcf5aozqdczvgmwgorrmblh6jn4nino3spcqd.onion>    
 
 -   Archive.org: <https://web.archive.org/web/https://anonymousplanet.org>
 
@@ -12190,9 +12203,9 @@ Find it online at:
 
 -   Archive.today over Tor: <http://archiveiya74codqgiixo33q62qlrqtkgmcitqx5u2oeqnmn5bpcbiyd.onion/anonymousplanet.org>
 
--   PDF: <https://anonymousplanet.org/export/guide.pdf> <sup>[[Archive.org]](https://web.archive.org/web/https://anonymousplanet.org/export/guide.pdf)</sup> <sup>[[Tor Mirror]](http://thgtoa7imksbg7rit4grgijl2ef6kc7b56bp56pmtta4g354lydlzkqd.onion/guide.pdf)</sup>
+-   PDF: <https://anonymousplanet.org/export/guide.pdf> <sup>[[Archive.org]](https://web.archive.org/web/https://anonymousplanet.org/export/guide.pdf)</sup> <sup>[[Tor Mirror]](http://thgtoa27ujspeqxasrfvcf5aozqdczvgmwgorrmblh6jn4nino3spcqd.onion/export/guide.pdf)</sup>
 
--   OpenDocument Text (ODT) version at: <https://anonymousplanet.org/export/guide.odt> <sup>[[Archive.org]](https://web.archive.org/web/https://anonymousplanet.org/export/guide.odt)</sup> <sup>[[Tor Mirror]](http://thgtoa7imksbg7rit4grgijl2ef6kc7b56bp56pmtta4g354lydlzkqd.onion/guide.odt)</sup>
+-   OpenDocument Text (ODT) version at: <https://anonymousplanet.org/export/guide.odt> <sup>[[Archive.org]](https://web.archive.org/web/https://anonymousplanet.org/export/guide.odt)</sup> <sup>[[Tor Mirror]](http://thgtoa27ujspeqxasrfvcf5aozqdczvgmwgorrmblh6jn4nino3spcqd.onion/export/guide.odt)</sup>
 
 
 # Appendix A7: Comparing versions
@@ -13511,7 +13524,7 @@ In short, our opinion is that you may use Session Messenger on iOS due to the ab
   [Appendix A: Windows Installation]: #appendix-a-windows-installation
   [Appendix B: Windows Additional Privacy Settings]: #appendix-b-windows-additional-privacy-settings
   [Appendix C: Windows Installation Media Creation]: #appendix-c-windows-installation-media-creation
-  [Appendix D: Using System Rescue to securely wipe an SSD drive.]: #appendix-d-using-system-rescue-to-securely-wipe-an-ssd-drive.
+  [Appendix D: Using System Rescue to securely wipe an SSD drive]: #appendix-d-using-system-rescue-to-securely-wipe-an-ssd-drive
   [Appendix E: Clonezilla]: #appendix-e-clonezilla
   [Appendix F: Diskpart]: #appendix-f-diskpart
   [Appendix G: Safe Browser on the Host OS]: #appendix-g-safe-browser-on-the-host-os
@@ -13784,7 +13797,6 @@ In short, our opinion is that you may use Session Messenger on iOS due to the ab
   [Yandex:]: #yandex
   [Your Anonymized Tor/VPN traffic:]: #your-anonymized-torvpn-traffic
   [Your Bluetooth MAC address:]: #your-bluetooth-mac-address
-  [Your Browser and Device Fingerprints:]: #your-browser-and-device-fingerprints
   [Your CPU:]: #your-cpu
   [Your Cloud backups/sync services:]: #your-cloud-backupssync-services
   [Your Clues about your Real Life and OSINT:]: #your-clues-about-your-real-life-and-osint
